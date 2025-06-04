@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berqurban Bersama UNP Peduli</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #fc466b, #3f5efb);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .table th,
+        .table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-color: #28a745;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #dc3545;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .stat-card h3 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🕌 Berqurban Bersama UNP Peduli</h1>
+            <p>Sistem Manajemen Qurban Universitas Negeri Padang</p>
+            <p>Lebaran Haji 1447 H</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('pendaftaran')">📝 Pendaftaran Peserta</button>
+            <button class="nav-tab" onclick="showTab('potongan')">💰 Kelola Potongan Gaji</button>
+            <button class="nav-tab" onclick="showTab('laporan')">📊 Laporan Peserta</button>
+        </div>
+
+        <!-- Tab Pendaftaran -->
+        <div id="pendaftaran" class="tab-content active">
+            <h2>📝 Pendaftaran Peserta Qurban</h2>
+            <div id="alert-container"></div>
+            
+            <form id="formPendaftaran">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Lengkap *</label>
+                        <input type="text" id="nama" required>
+                    </div>
+                    <div class="form-group">
+                        <label>NIP/NIK *</label>
+                        <input type="text" id="nip" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Status *</label>
+                        <select id="status" required>
+                            <option value="">Pilih Status</option>
+                            <option value="Dosen">Dosen</option>
+                            <option value="Karyawan">Karyawan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fakultas/Unit Kerja *</label>
+                        <input type="text" id="fakultas" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>No. Telepon *</label>
+                        <input type="tel" id="telepon" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Jenis Qurban *</label>
+                    <select id="jenisQurban" required onchange="updateHarga()">
+                        <option value="">Pilih Jenis Qurban</option>
+                        <option value="Kambing" data-harga="2500000">Kambing (Rp 2.500.000)</option>
+                        <option value="Sapi 1/7" data-harga="2800000">Sapi 1/7 Bagian (Rp 2.800.000)</option>
+                        <option value="Sapi 1/4" data-harga="4200000">Sapi 1/4 Bagian (Rp 4.200.000)</option>
+                        <option value="Sapi Utuh" data-harga="19600000">Sapi Utuh (Rp 19.600.000)</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Estimasi Biaya</label>
+                        <input type="text" id="estimasiBiaya" readonly style="background: #f0f0f0;">
+                    </div>
+                    <div class="form-group">
+                        <label>Potongan per Bulan (12 bulan)</label>
+                        <input type="text" id="potonganBulan" readonly style="background: #f0f0f0;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Catatan Tambahan</label>
+                    <textarea id="catatan" rows="3" placeholder="Catatan atau permintaan khusus..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn">✅ Daftar Qurban</button>
+                <button type="reset" class="btn btn-danger" onclick="resetForm()">🔄 Reset Form</button>
+            </form>
+        </div>
+
+        <!-- Tab Potongan Gaji -->
+        <div id="potongan" class="tab-content">
+            <h2>💰 Kelola Potongan Gaji</h2>
+            <p style="color: #666; margin-bottom: 20px;">Bagian Penggajian - Input data potongan gaji bulanan peserta qurban</p>
+            
+            <div class="form-group">
+                <label>Pilih Peserta</label>
+                <select id="pilihPeserta" onchange="loadDataPeserta()">
+                    <option value="">Pilih Peserta untuk Input Potongan</option>
+                </select>
+            </div>
+            
+            <div id="formPotongan" class="hidden">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Peserta</label>
+                        <input type="text" id="namaPesertaPotongan" readonly style="background: #f0f0f0;">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Biaya Qurban</label>
+                        <input type="text" id="totalBiayaPotongan" readonly style="background: #f0f0f0;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Bulan/Tahun *</label>
+                        <input type="month" id="bulanPotongan" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah Potongan *</label>
+                        <input type="number" id="jumlahPotongan" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Keterangan</label>
+                    <input type="text" id="keteranganPotongan" placeholder="Keterangan potongan...">
+                </div>
+                
+                <button type="button" class="btn" onclick="simpanPotongan()">💾 Simpan Potongan</button>
+                <button type="button" class="btn btn-danger" onclick="batalPotongan()">❌ Batal</button>
+            </div>
+            
+            <div id="riwayatPotongan">
+                <h3>📋 Riwayat Potongan</h3>
+                <div id="tablePotongan"></div>
+            </div>
+        </div>
+
+        <!-- Tab Laporan -->
+        <div id="laporan" class="tab-content">
+            <h2>📊 Laporan Peserta Qurban 1447 H</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="totalPeserta">0</h3>
+                    <p>Total Peserta</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalBiaya">Rp 0</h3>
+                    <p>Total Biaya Qurban</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalTerkumpul">Rp 0</h3>
+                    <p>Dana Terkumpul</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="sisaTagihan">Rp 0</h3>
+                    <p>Sisa Tagihan</p>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <button class="btn" onclick="exportLaporan()">📄 Export PDF</button>
+                <button class="btn btn-success" onclick="refreshLaporan()">🔄 Refresh Data</button>
+            </div>
+            
+            <div id="tableLaporan"></div>
+        </div>
+    </div>
+
+    <script>
+        // Database JSON storage
+        let database = {
+            peserta: [],
+            potongan: []
+        };
+
+        // Load data from localStorage
+        function loadDatabase() {
+            const savedData = localStorage.getItem('unp_qurban_db');
+            if (savedData) {
+                database = JSON.parse(savedData);
+            }
+        }
+
+        // Save data to localStorage
+        function saveDatabase() {
+            localStorage.setItem('unp_qurban_db', JSON.stringify(database));
+        }
+
+        // Initialize app
+        function init() {
+            loadDatabase();
+            loadPesertaList();
+            refreshLaporan();
+            
+            // Set default month to current month
+            const now = new Date();
+            const currentMonth = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+            document.getElementById('bulanPotongan').value = currentMonth;
+        }
+
+        // Tab navigation
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Refresh data if needed
+            if (tabName === 'potongan') {
+                loadPesertaList();
+            } else if (tabName === 'laporan') {
+                refreshLaporan();
+            }
+        }
+
+        // Update harga based on jenis qurban
+        function updateHarga() {
+            const jenisQurban = document.getElementById('jenisQurban');
+            const selectedOption = jenisQurban.options[jenisQurban.selectedIndex];
+            
+            if (selectedOption.dataset.harga) {
+                const harga = parseInt(selectedOption.dataset.harga);
+                const potonganBulan = Math.ceil(harga / 12);
+                
+                document.getElementById('estimasiBiaya').value = 'Rp ' + harga.toLocaleString('id-ID');
+                document.getElementById('potonganBulan').value = 'Rp ' + potonganBulan.toLocaleString('id-ID');
+            } else {
+                document.getElementById('estimasiBiaya').value = '';
+                document.getElementById('potonganBulan').value = '';
+            }
+        }
+
+        // Form submission
+        document.getElementById('formPendaftaran').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Check if NIP already exists
+            const nip = document.getElementById('nip').value;
+            const existingPeserta = database.peserta.find(p => p.nip === nip);
+            
+            if (existingPeserta) {
+                showAlert('danger', '❌ NIP/NIK sudah terdaftar! Silakan gunakan NIP/NIK yang berbeda.');
+                return;
+            }
+            
+            // Get form data
+            const jenisQurban = document.getElementById('jenisQurban');
+            const selectedOption = jenisQurban.options[jenisQurban.selectedIndex];
+            const harga = parseInt(selectedOption.dataset.harga);
+            
+            const pesertaBaru = {
+                id: Date.now(),
+                nama: document.getElementById('nama').value,
+                nip: nip,
+                status: document.getElementById('status').value,
+                fakultas: document.getElementById('fakultas').value,
+                email: document.getElementById('email').value,
+                telepon: document.getElementById('telepon').value,
+                jenisQurban: jenisQurban.value,
+                estimasiBiaya: harga,
+                potonganBulan: Math.ceil(harga / 12),
+                catatan: document.getElementById('catatan').value,
+                tanggalDaftar: new Date().toLocaleDateString('id-ID'),
+                status_pembayaran: 'Belum Lunas'
+            };
+            
+            database.peserta.push(pesertaBaru);
+            saveDatabase();
+            
+            showAlert('success', '✅ Pendaftaran berhasil! Data telah disimpan.');
+            resetForm();
+        });
+
+        function resetForm() {
+            document.getElementById('formPendaftaran').reset();
+            document.getElementById('estimasiBiaya').value = '';
+            document.getElementById('potonganBulan').value = '';
+        }
+
+        function showAlert(type, message) {
+            const alertContainer = document.getElementById('alert-container');
+            alertContainer.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            
+            // Auto hide alert after 5 seconds
+            setTimeout(() => {
+                alertContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        // Load peserta list for potongan gaji
+        function loadPesertaList() {
+            const select = document.getElementById('pilihPeserta');
+            select.innerHTML = '<option value="">Pilih Peserta untuk Input Potongan</option>';
+            
+            database.peserta.forEach(peserta => {
+                const option = document.createElement('option');
+                option.value = peserta.id;
+                option.textContent = `${peserta.nama} (${peserta.nip}) - ${peserta.jenisQurban}`;
+                select.appendChild(option);
+            });
+        }
+
+        function loadDataPeserta() {
+            const pesertaId = document.getElementById('pilihPeserta').value;
+            const formPotongan = document.getElementById('formPotongan');
+            
+            if (pesertaId) {
+                const peserta = database.peserta.find(p => p.id == pesertaId);
+                if (peserta) {
+                    document.getElementById('namaPesertaPotongan').value = peserta.nama;
+                    document.getElementById('totalBiayaPotongan').value = 'Rp ' + peserta.estimasiBiaya.toLocaleString('id-ID');
+                    document.getElementById('jumlahPotongan').value = peserta.potonganBulan;
+                    
+                    formPotongan.classList.remove('hidden');
+                    loadRiwayatPotongan(pesertaId);
+                }
+            } else {
+                formPotongan.classList.add('hidden');
+            }
+        }
+
+        function simpanPotongan() {
+            const pesertaId = document.getElementById('pilihPeserta').value;
+            const bulan = document.getElementById('bulanPotongan').value;
+            const jumlah = parseInt(document.getElementById('jumlahPotongan').value);
+            const keterangan = document.getElementById('keteranganPotongan').value;
+            
+            if (!pesertaId || !bulan || !jumlah) {
+                alert('❌ Mohon lengkapi semua data yang diperlukan!');
+                return;
+            }
+            
+            // Check if potongan for this month already exists
+            const existingPotongan = database.potongan.find(p => 
+                p.peserta_id == pesertaId && p.bulan === bulan
+            );
+            
+            if (existingPotongan) {
+                if (confirm('⚠️ Potongan untuk bulan ini sudah ada. Apakah ingin mengupdate?')) {
+                    existingPotongan.jumlah = jumlah;
+                    existingPotongan.keterangan = keterangan;
+                    existingPotongan.tanggal_input = new Date().toLocaleDateString('id-ID');
+                }
+            } else {
+                const potonganBaru = {
+                    id: Date.now(),
+                    peserta_id: parseInt(pesertaId),
+                    bulan: bulan,
+                    jumlah: jumlah,
+                    keterangan: keterangan,
+                    tanggal_input: new Date().toLocaleDateString('id-ID')
+                };
+                
+                database.potongan.push(potonganBaru);
+            }
+            
+            saveDatabase();
+            showAlert('success', '✅ Data potongan berhasil disimpan!');
+            
+            // Clear form
+            document.getElementById('bulanPotongan').value = '';
+            document.getElementById('jumlahPotongan').value = '';
+            document.getElementById('keteranganPotongan').value = '';
+            
+            loadRiwayatPotongan(pesertaId);
+        }
+
+        function batalPotongan() {
+            document.getElementById('formPotongan').classList.add('hidden');
+            document.getElementById('pilihPeserta').value = '';
+        }
+
+        function loadRiwayatPotongan(pesertaId) {
+            const riwayat = database.potongan.filter(p => p.peserta_id == pesertaId);
+            const tableContainer = document.getElementById('tablePotongan');
+            
+            if (riwayat.length === 0) {
+                tableContainer.innerHTML = '<p style="text-align: center; color: #666;">Belum ada riwayat potongan.</p>';
+                return;
+            }
+            
+            let tableHTML = `
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Bulan/Tahun</th>
+                            <th>Jumlah Potongan</th>
+                            <th>Keterangan</th>
+                            <th>Tanggal Input</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            riwayat.sort((a, b) => new Date(b.bulan) - new Date(a.bulan));
+            
+            riwayat.forEach(potongan => {
+                const [year, month] = potongan.bulan.split('-');
+                const monthNames = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                const bulanText = monthNames[parseInt(month)] + ' ' + year;
+                
+                tableHTML += `
+                    <tr>
+                        <td>${bulanText}</td>
+                        <td>Rp ${potongan.jumlah.toLocaleString('id-ID')}</td>
+                        <td>${potongan.keterangan || '-'}</td>
+                        <td>${potongan.tanggal_input}</td>
+                        <td>
+                            <button class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;" 
+                                onclick="hapusPotongan(${potongan.id}, ${pesertaId})">🗑️ Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += '</tbody></table>';
+            tableContainer.innerHTML = tableHTML;
+        }
+
+        function hapusPotongan(potonganId, pesertaId) {
+            if (confirm('⚠️ Apakah Anda yakin ingin menghapus data potongan ini?')) {
+                database.potongan = database.potongan.filter(p => p.id !== potonganId);
+                saveDatabase();
+                loadRiwayatPotongan(pesertaId);
+                showAlert('success', '✅ Data potongan berhasil dihapus!');
+            }
+        }
+
+        function refreshLaporan() {
+            updateStatistik();
+            generateTableLaporan();
+        }
+
+        function updateStatistik() {
+            const totalPeserta = database.peserta.length;
+            const totalBiaya = database.peserta.reduce((sum, p) => sum + p.estimasiBiaya, 0);
+            const totalTerkumpul = database.potongan.reduce((sum, p) => sum + p.jumlah, 0);
+            const sisaTagihan = totalBiaya - totalTerkumpul;
+            
+            document.getElementById('totalPeserta').textContent = totalPeserta;
+            document.getElementById('totalBiaya').textContent = 'Rp ' + totalBiaya.toLocaleString('id-ID');
+            document.getElementById('totalTerkumpul').textContent = 'Rp ' + totalTerkumpul.toLocaleString('id-ID');
+            document.getElementById('sisaTagihan').textContent = 'Rp ' + sisaTagihan.toLocaleString('id-ID');
+        }
+
+        function generateTableLaporan() {
+            const tableContainer = document.getElementById('tableLaporan');
+            
+            if (database.peserta.length === 0) {
+                tableContainer.innerHTML = '<p style="text-align: center; color: #666;">Belum ada data peserta qurban.</p>';
+                return;
+            }
+            
+            let tableHTML = `
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>NIP/NIK</th>
+                            <th>Status</th>
+                            <th>Fakultas/Unit</th>
+                            <th>Jenis Qurban</th>
+                            <th>Total Biaya</th>
+                            <th>Terbayar</th>
+                            <th>Sisa</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            database.peserta.forEach((peserta, index) => {
+                const potonganPeserta = database.potongan.filter(p => p.peserta_id === peserta.id);
+                const totalTerbayar = potonganPeserta.reduce((sum, p) => sum + p.jumlah, 0);
+                const sisa = peserta.estimasiBiaya - totalTerbayar;
+                const statusPembayaran = sisa <= 0 ? 'Lunas' : 'Belum Lunas';
+                const statusClass = sisa <= 0 ? 'color: green; font-weight: bold;' : 'color: red;';
+                
+                tableHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${peserta.nama}</td>
+                        <td>${peserta.nip}</td>
+                        <td>${peserta.status}</td>
+                        <td>${peserta.fakultas}</td>
+                        <td>${peserta.jenisQurban}</td>
+                        <td>Rp ${peserta.estimasiBiaya.toLocaleString('id-ID')}</td>
+                        <td>Rp ${totalTerbayar.toLocaleString('id-ID')}</td>
+                        <td>Rp ${sisa.toLocaleString('id-ID')}</td>
+                        <td style="${statusClass}">${statusPembayaran}</td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += '</tbody></table>';
+            tableContainer.innerHTML = tableHTML;
+        }
+
+        function exportLaporan() {
+            // Simple export functionality - generate downloadable text report
+            let reportContent = `LAPORAN PESERTA QURBAN UNP 1447 H\n`;
+            reportContent += `Tanggal: ${new Date().toLocaleDateString('id-ID')}\n`;
+            reportContent += `================================================\n\n`;
+            
+            // Statistics
+            const totalPeserta = database.peserta.length;
+            const totalBiaya = database.peserta.reduce((sum, p) => sum + p.estimasiBiaya, 0);
+            const totalTerkumpul = database.potongan.reduce((sum, p) => sum + p.jumlah, 0);
+            const sisaTagihan = totalBiaya - totalTerkumpul;
+            
+            reportContent += `RINGKASAN:\n`;
+            reportContent += `Total Peserta: ${totalPeserta} orang\n`;
+            reportContent += `Total Biaya Qurban: Rp ${totalBiaya.toLocaleString('id-ID')}\n`;
+            reportContent += `Dana Terkumpul: Rp ${totalTerkumpul.toLocaleString('id-ID')}\n`;
+            reportContent += `Sisa Tagihan: Rp ${sisaTagihan.toLocaleString('id-ID')}\n\n`;
+            
+            reportContent += `DETAIL PESERTA:\n`;
+            reportContent += `================================================\n`;
+            
+            database.peserta.forEach((peserta, index) => {
+                const potonganPeserta = database.potongan.filter(p => p.peserta_id === peserta.id);
+                const totalTerbayar = potonganPeserta.reduce((sum, p) => sum + p.jumlah, 0);
+                const sisa = peserta.estimasiBiaya - totalTerbayar;
+                const statusPembayaran = sisa <= 0 ? 'LUNAS' : 'BELUM LUNAS';
+                
+                reportContent += `${index + 1}. ${peserta.nama} (${peserta.nip})\n`;
+                reportContent += `   Status: ${peserta.status}\n`;
+                reportContent += `   Fakultas/Unit: ${peserta.fakultas}\n`;
+                reportContent += `   Jenis Qurban: ${peserta.jenisQurban}\n`;
+                reportContent += `   Total Biaya: Rp ${peserta.estimasiBiaya.toLocaleString('id-ID')}\n`;
+                reportContent += `   Terbayar: Rp ${totalTerbayar.toLocaleString('id-ID')}\n`;
+                reportContent += `   Sisa: Rp ${sisa.toLocaleString('id-ID')}\n`;
+                reportContent += `   Status: ${statusPembayaran}\n`;
+                reportContent += `   Tanggal Daftar: ${peserta.tanggalDaftar}\n\n`;
+            });
+            
+            // Create and download file
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Laporan_Qurban_UNP_1447H_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showAlert('success', '📄 Laporan berhasil diexport!');
+        }
+
+        // Initialize app when page loads
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
